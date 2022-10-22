@@ -23,11 +23,20 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#FFFFFF",
+        "Permissions": [
+          "android.permission.READ_SMS"
+        ]
+      },
+      "package": "com.parziva1.smsreader"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "52324713-5ec2-467c-ab34-5d13614d90c3"
+      }
     }
   }
 }
