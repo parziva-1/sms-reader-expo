@@ -1,18 +1,17 @@
-import React, { useContext } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, PermissionsAndroid, FlatList } from 'react-native';
-import { AuthContext } from '../components/provider/AuthProvider';
-import { Button } from 'react-native-paper';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { useAuth } from '../components/provider/AuthProvider'
+import { Button } from 'react-native-paper'
 
-export default function LogOut() {
-    const { signOut } = useContext(AuthContext);
+export default function LogOut () {
+  const { signOut } = useAuth()
   return (
     <View style={styles.container}>
-      <Button onPress={() => signOut()} mode="contained" elevation={5}>
-        Send
+      <Button onPress={() => signOut()} mode='contained' elevation={5}>
+        Logout
       </Button>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
+    justifyContent: 'center'
+  }
+})

@@ -1,47 +1,58 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
-import { Session } from '@supabase/supabase-js';
+import React, { createContext, useState, useEffect, useContext } from 'react'
+import { supabase } from '../../lib/supabase'
 
-const AuthContext = createContext({});
+const AuthContext = createContext({})
 
 const AuthProvider = (props) => {
   // user null = loading
-  const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null)
+  const [session, setSession] = useState(null)
 
   useEffect(() => {
-    const {data, error} = supabase.auth.getSession();
-    console.log({error})
-    setSession(data);
-    if(session){
-        const {data:{user}} = supabase.auth.getUser();
-        console.log({user})
-        if (user) {
-            setUser(user);
-          }
-    }else{
-        setUser(false)
+    const { data } = supabase.auth.getSession()
+    setSession(data)
+    if (session) {
+      const {
+        data: { user }
+      } = supabase.auth.getUser()
+      if (user) {
+        setUser(user)
+      }
+    } else {
+      setUser(false)
     }
-    
+
     supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
+      console.log({ session })
+      console.log({ event })
+      setSession(session)
       if (event === 'SIGNED_IN') {
-        setUser(session?.user);
+        setUser(session?.user)
       }
       if (event === 'SIGNED_OUT') {
-        setUser(null);
+        setUser(false)
       }
-    });
-  }, []);
-console.log({user})
+      if (event === 'PASSWORD_RECOVERY') {
+        supabase.auth.updateUser({ password: 'w' }).then(({ data, error }) => {
+
+        })
+      }
+    })
+  }, [])
+  console.log({ user }, { session })
   const value = {
     signUp: (data) => supabase.auth.signUp(data),
     signOut: () => supabase.auth.signOut(),
     signInWithPassword: (data) => supabase.auth.signInWithPassword(data),
-    user,
-  };
+    resetPasswordForEmail: (data) => supabase.authresetPasswordForEmail(data),
+    user
+  }
 
-  return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>;
-};
+  return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
+}
 
-export { AuthContext, AuthProvider };
+export default AuthProvider
+
+export function useAuth () {
+  return useContext(AuthContext)
+}

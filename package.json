@@ -32,16 +32,26 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "@typescript-eslint/parser": "^5.43.0",
-    "eslint": "^8.28.0",
-    "eslint-config-universe": "^11.1.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-jsx": "^11.0.0",
+    "eslint-config-standard-react": "^12.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.11",
     "prettier": "^2.7.1"
   },
   "private": true,
   "eslintConfig": {
-    "extends": "universe/native",
+    "parser": "babel-eslint",
+    "extends": [
+      "standard",
+      "standard-jsx",
+      "standard-react"
+    ],
     "rules": {
       "react/prop-types": 0
     }

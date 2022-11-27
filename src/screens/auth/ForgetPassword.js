@@ -3,31 +3,26 @@ import { ScrollView, TouchableOpacity, View, KeyboardAvoidingView, Image } from 
 import { Button, Text, TextInput } from 'react-native-paper'
 import { useAuth } from '../../components/provider/AuthProvider'
 
-const Register = ({ navigation }) => {
-  const { signUp } = useAuth()
+const ForgetPassword = ({ navigation }) => {
+  const { resetPasswordForEmail } = useAuth()
 
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function register () {
+  async function forget () {
     setLoading(true)
-    const { user, error } = await signUp({
-      email,
-      password
-    })
-    if (!error && !user) {
+    if (email === '') {
       setLoading(false)
-      // eslint-disable-next-line no-undef
-      alert('Check your email for the login link!')
+      return
+    }
+    const { error } = await resetPasswordForEmail(email)
+    if (!error) {
+      setLoading(false)
     }
     if (error) {
       setLoading(false)
-      // eslint-disable-next-line no-undef
-      alert(error.message)
     }
   }
-
   return (
     <KeyboardAvoidingView behavior='height' enabled style={{ flex: 1 }}>
       <View>
@@ -49,7 +44,7 @@ const Register = ({ navigation }) => {
                 height: 220,
                 width: 220
               }}
-              source={require('../../../assets/images/register.png')}
+              source={require('../../../assets/images/forget.png')}
             />
           </View>
           <View
@@ -60,14 +55,14 @@ const Register = ({ navigation }) => {
             }}
           >
             <Text
-              fontWeight='bold'
               size='h3'
+              fontWeight='bold'
               style={{
                 alignSelf: 'center',
                 padding: 30
               }}
             >
-              Register
+              Forget Password
             </Text>
             <Text>Email</Text>
             <TextInput
@@ -80,29 +75,18 @@ const Register = ({ navigation }) => {
               keyboardType='email-address'
               onChangeText={(text) => setEmail(text)}
             />
-
-            <Text style={{ marginTop: 15 }}>Password</Text>
-            <TextInput
-              containerStyle={{ marginTop: 15 }}
-              placeholder='Enter your password'
-              value={password}
-              autoCapitalize='none'
-              autoCompleteType='off'
-              autoCorrect={false}
-              secureTextEntry
-              onChangeText={(text) => setPassword(text)}
-            />
             <Button
               mode='contained-tonal'
               onPress={() => {
-                register()
+                forget()
               }}
               style={{
-                marginTop: 20
+                marginTop: 20,
+                borderColor: 'red'
               }}
               disabled={loading}
             >
-              <Text>{loading ? 'Loading' : 'Create an account'}</Text>
+              <Text>{loading ? 'Loading' : 'Send email'}</Text>
             </Button>
 
             <View
@@ -137,4 +121,4 @@ const Register = ({ navigation }) => {
   )
 }
 
-export default Register
+export default ForgetPassword

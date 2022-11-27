@@ -1,54 +1,54 @@
-import React, { useContext, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react'
 
-import { ScrollView, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
-import { supabase } from '../../lib/supabase';
-import { AuthContext } from '../../components/provider/AuthProvider';
+import { ScrollView, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native'
+import { Button, Text, TextInput } from 'react-native-paper'
+import { useAuth } from '../../components/provider/AuthProvider'
 
-const Login = () => {
-    const { signInWithPassword } = useContext(AuthContext);
+const Login = ({ navigation }) => {
+  const { signInWithPassword } = useAuth()
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  async function login() {
-    setLoading(true);
+  async function login () {
+    setLoading(true)
     const { user, error } = await signInWithPassword({
       email,
-      password,
-    });
-    console.log({user,error})
+      password
+    })
     if (!error && !user) {
-      setLoading(false);
-      alert('Check your email for the login link!');
+      setLoading(false)
+      // eslint-disable-next-line no-undef
+      alert('Check your email for the login link!')
     }
     if (error) {
-      setLoading(false);
-      alert(error.message);
+      setLoading(false)
+      // eslint-disable-next-line no-undef
+      alert(error.message)
     }
   }
 
   return (
-    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior='height' enabled style={{ flex: 1 }}>
       <View>
         <ScrollView
           contentContainerStyle={{
-            flexGrow: 1,
-          }}>
+            flexGrow: 1
+          }}
+        >
           <View
             style={{
               flex: 1,
               justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#17171E',
-            }}>
+              alignItems: 'center'
+            }}
+          >
             <Image
-              resizeMode="contain"
+              resizeMode='contain'
               style={{
                 height: 220,
-                width: 220,
+                width: 220
               }}
               source={require('../../../assets/images/login.png')}
             />
@@ -57,72 +57,76 @@ const Login = () => {
             style={{
               flex: 3,
               paddingHorizontal: 20,
-              paddingBottom: 20,
-              backgroundColor: '#17171E',
-            }}>
+              paddingBottom: 20
+            }}
+          >
             <Text
-              fontWeight="bold"
+              fontWeight='bold'
               style={{
                 alignSelf: 'center',
-                padding: 30,
+                padding: 30
               }}
-              size="h3">
+              size='h3'
+            >
               Login
             </Text>
             <Text>Email</Text>
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your email"
+              placeholder='Enter your email'
               value={email}
-              autoCapitalize="none"
-              autoCompleteType="off"
+              autoCapitalize='none'
+              autoCompleteType='off'
               autoCorrect={false}
-              keyboardType="email-address"
+              keyboardType='email-address'
               onChangeText={(text) => setEmail(text)}
             />
 
             <Text style={{ marginTop: 15 }}>Password</Text>
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your password"
+              placeholder='Enter your password'
               value={password}
-              autoCapitalize="none"
-              autoCompleteType="off"
+              autoCapitalize='none'
+              autoCompleteType='off'
               autoCorrect={false}
-              secureTextEntry={true}
+              secureTextEntry
               onChangeText={(text) => setPassword(text)}
             />
             <Button
-            buttonColor="red"
-            textColor="black"
-              text={loading ? 'Loading' : 'Continue'}
+              mode='contained-tonal'
               onPress={() => {
-                login();
+                login()
               }}
               style={{
-                marginTop: 20,
+                marginTop: 20
               }}
               disabled={loading}
-            />
+            >
+              <Text>{loading ? 'Loading' : 'Continue'}</Text>
+            </Button>
 
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: 15,
-                justifyContent: 'center',
-              }}>
-              <Text size="md">Don't have an account?</Text>
+                justifyContent: 'center'
+              }}
+            >
+              <Text size='md'>Don't have an account?</Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('Register');
-                }}>
+                  navigation.navigate('Register')
+                }}
+              >
                 <Text
-                  size="md"
-                  fontWeight="bold"
+                  size='md'
+                  fontWeight='bold'
                   style={{
-                    marginLeft: 5,
-                  }}>
+                    marginLeft: 5
+                  }}
+                >
                   Register here
                 </Text>
               </TouchableOpacity>
@@ -132,13 +136,15 @@ const Login = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: 10,
-                justifyContent: 'center',
-              }}>
+                justifyContent: 'center'
+              }}
+            >
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('ForgetPassword');
-                }}>
-                <Text size="md" fontWeight="bold">
+                  navigation.navigate('ForgetPassword')
+                }}
+              >
+                <Text size='md' fontWeight='bold'>
                   Forget password
                 </Text>
               </TouchableOpacity>
@@ -148,14 +154,14 @@ const Login = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: 30,
-                justifyContent: 'center',
-              }}>
-            </View>
+                justifyContent: 'center'
+              }}
+            />
           </View>
         </ScrollView>
       </View>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

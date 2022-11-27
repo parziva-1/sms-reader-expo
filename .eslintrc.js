@@ -1,20 +1,16 @@
 module.exports = {
   env: {
-    browser: true,
     es2021: true,
+    node: true
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  extends: ['plugin:react/recommended', 'standard', 'standard-jsx', 'standard-react'],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['react'],
   rules: {
-    indent: ['error', 'spaces'],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
-    'react/prop-types': 0,
-  },
-};
+    'react/prop-types': 0
+  }
+}

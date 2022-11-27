@@ -1,16 +1,18 @@
-import React from "react";
-import { View, ActivityIndicator } from "react-native";
+import React from 'react'
+import { View, ActivityIndicator } from 'react-native'
 
-export default function () {
+const Loading = () => {
   return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <ActivityIndicator size="large" />
-      </View>
-  );
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      <ActivityIndicator size='large' />
+    </View>
+  )
 }
+
+export default Loading
